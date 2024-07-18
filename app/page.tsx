@@ -2,17 +2,18 @@ import { HeroSection } from "./components/pages/home/hero-section";
 import { HighlightedProjects } from "./components/pages/home/highlighted-projects";
 import { KnownTechs } from "./components/pages/home/know-techs";
 import { WorkExperience } from "./components/pages/home/work-experience";
+import { HomePageData } from "./types/page-info";
 import { fetchHygraphQuery } from "./utils/fetch-hygraph-query";
 
-const getPageData = async () => {
+const getPageData = async (): Promise<HomePageData> => {
   const query = `
-    query PageInfoQuery {
+    query MyQuery {
+      technologies {
+            name
+          }
       page(where: {slug: "home"}) {
         introduction {
           raw
-        }
-        technologies {
-          name
         }
         profilePicture {
           url
@@ -30,17 +31,20 @@ const getPageData = async () => {
     }
   `;
 
-  return fetchHygraphQuery(query);
+  return fetchHygraphQuery(
+    query,
+    60 * 60 * 24 // 24 hours
+  );
 };
 
 export default async function Home() {
-  const response = await getPageData();
+  const { page: pageData } = await getPageData();
 
-  console.log(response);
+  console.log(pageData);
 
   return (
     <>
-      <HeroSection />
+      <HeroSection homeInfo={pageData} />
       <KnownTechs />
       <HighlightedProjects />
       <WorkExperience />

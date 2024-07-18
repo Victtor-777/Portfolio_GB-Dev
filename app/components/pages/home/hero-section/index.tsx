@@ -10,27 +10,34 @@ import {
   TbBrandWhatsapp,
   TbBrandYoutube,
 } from "react-icons/tb";
+import { HomePageInfo } from "@/app/types/page-info";
+import { RichText } from "@/app/components/rich-text";
+import { CMSIcon } from "@/app/components/cms-icon";
 
-const MOCK_CONTACTS = [
-  {
-    url: "https://github.com/",
-    icon: <TbBrandGithub />,
-  },
-  {
-    url: "https://github.com/",
-    icon: <TbBrandLinkedin />,
-  },
-  {
-    url: "https://github.com/",
-    icon: <TbBrandYoutube />,
-  },
-  {
-    url: "https://github.com/",
-    icon: <TbBrandWhatsapp />,
-  },
-];
+// const MOCK_CONTACTS = [
+//   {
+//     url: "https://github.com/",
+//     icon: <TbBrandGithub />,
+//   },
+//   {
+//     url: "https://github.com/",
+//     icon: <TbBrandLinkedin />,
+//   },
+//   {
+//     url: "https://github.com/",
+//     icon: <TbBrandYoutube />,
+//   },
+//   {
+//     url: "https://github.com/",
+//     icon: <TbBrandWhatsapp />,
+//   },
+// ];
 
-export const HeroSection = () => {
+type HomeSectionProps = {
+  homeInfo: HomePageInfo;
+};
+
+export const HeroSection = ({ homeInfo }: HomeSectionProps) => {
   const handleContact = () => {
     const contactSection = document.querySelector("#contact");
     if (contactSection) {
@@ -43,17 +50,13 @@ export const HeroSection = () => {
         <div className="w-full lg:max-w-[530px]">
           <p className="font-mono text-emerald-400">Olá, meu nome é</p>
           <h2 className="text-4xl font-medium mt-2">Gabriel Borges</h2>
-          <p className="text-gray-400 my-6 text-sm sm:text-base">
-            Olá, meu nome é Pedro Costa e sou um desenvolvedor front-end
-            apaixonado por tecnologia. Com mais de 5 anos de experiência. Meu
-            objetivo é criar interfaces de usuário bonitas e funcionais, além de
-            liderar equipes técnicas em projetos desafiadores. Estou sempre
-            aberto a novas oportunidades e desafios.
-          </p>
+          <div className="text-gray-400 my-6 text-sm sm:text-base">
+            <RichText content={homeInfo.introduction.raw} />
+          </div>
 
           <div className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px]">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <TechBadge name="Next.js" />
+            {homeInfo.knownTechs.map((tech) => (
+              <TechBadge name={tech.name} />
             ))}
           </div>
 
@@ -64,14 +67,14 @@ export const HeroSection = () => {
             </Button>
 
             <div className="text-gray-600 text-2xl flex items-center h-20 gap-3">
-              {MOCK_CONTACTS.map((contact, i) => (
+              {homeInfo.socials.map((contact, i) => (
                 <a
                   className="hover:text-gray-100 transition-colors"
                   target="_blank"
                   key={`contact-${i}`}
                   href={contact.url}
                 >
-                  {contact.icon}
+                  <CMSIcon icon={contact.iconSvg} />
                 </a>
               ))}
             </div>
@@ -81,7 +84,7 @@ export const HeroSection = () => {
         <Image
           width={420}
           height={404}
-          src={"/images/profile-pic.png"}
+          src={homeInfo.profilePicture.url}
           alt="Foto de perfil"
           className="w-[300px] h=[300px] lg:w-[420px] lg:h-[404px] mb-6 lg:mb-0 shadow-2xl rounded-lg object-cover"
         />
