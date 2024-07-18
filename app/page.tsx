@@ -27,6 +27,9 @@ const getPageData = async (): Promise<HomePageData> => {
           name
           startDate
         }
+        introTechnologies {
+          name
+        }
       }
     }
   `;
@@ -39,8 +42,6 @@ const getPageData = async (): Promise<HomePageData> => {
 
 export default async function Home() {
   const { page: pageData } = await getPageData();
-
-  console.log(pageData);
 
   return (
     <>

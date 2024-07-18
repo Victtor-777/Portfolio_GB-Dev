@@ -10,7 +10,7 @@ export type HomePageInfo = {
   introduction: {
     raw: RichTextContent;
   };
-  technologies: KnownTech[];
+  introTechnologies: KnownTech[];
   profilePicture: {
     url: string;
   };
@@ -18,6 +18,15 @@ export type HomePageInfo = {
   knownTechs: KnownTech[];
 };
 
+// export type Technologie = {
+//   name: string;
+// };
+
+// export type Technologies = {
+//   technologies: Technologie[];
+// };
+
 export type HomePageData = {
   page: HomePageInfo;
+  // tech: Technologies;
 };

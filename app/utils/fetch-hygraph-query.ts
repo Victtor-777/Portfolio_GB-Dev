@@ -13,5 +13,6 @@ export const fetchHygraphQuery = async (query: string, revalidate?: number) => {
   });
 
   const { data } = await response.json();
+  console.log(data);
   return data;
 };
