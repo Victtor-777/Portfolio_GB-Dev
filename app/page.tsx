@@ -8,9 +8,6 @@ import { fetchHygraphQuery } from "./utils/fetch-hygraph-query";
 const getPageData = async (): Promise<HomePageData> => {
   const query = `
     query MyQuery {
-      technologies {
-            name
-          }
       page(where: {slug: "home"}) {
         introduction {
           raw
@@ -30,6 +27,17 @@ const getPageData = async (): Promise<HomePageData> => {
         introTechnologies {
           name
         }
+        highlightProjects {
+          slug
+          thumbnail {
+            url
+          }
+          title
+          shortDescription
+          technologies {
+            name
+          }
+        }
       }
     }
   `;
@@ -43,10 +51,12 @@ const getPageData = async (): Promise<HomePageData> => {
 export default async function Home() {
   const { page: pageData } = await getPageData();
 
+  console.log(pageData);
+
   return (
     <>
       <HeroSection homeInfo={pageData} />
-      <KnownTechs />
+      <KnownTechs techs={pageData.knownTechs} />
       <HighlightedProjects />
       <WorkExperience />
     </>
