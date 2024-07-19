@@ -59,10 +59,7 @@ const getPageData = async (): Promise<HomePageData> => {
 
   console.log(query);
 
-  return fetchHygraphQuery(
-    query
-    // 60 * 60 * 24 // 24 hours
-  );
+  return fetchHygraphQuery(query, 2);
 };
 
 export default async function Home() {
