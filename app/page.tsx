@@ -7,49 +7,66 @@ import { fetchHygraphQuery } from "./utils/fetch-hygraph-query";
 
 const getPageData = async (): Promise<HomePageData> => {
   const query = `
-    query MyQuery {
-      page(where: {slug: "home"}) {
-        introduction {
-          raw
-        }
-        profilePicture {
+  query MyQuery {
+    page(where: {slug: "home"}) {
+      introduction {
+        raw
+      }
+      profilePicture {
+        url
+      }
+      socials {
+        url
+        iconSvg
+      }
+      knownTechs {
+        iconSvg
+        name
+        startDate
+      }
+      introTechnologies {
+        name
+      }
+      highlightProjects {
+        slug
+        thumbnail {
           url
         }
-        socials {
-          url
-          iconSvg
-        }
-        knownTechs {
-          iconSvg
+        title
+        shortDescription
+        technologies {
           name
-          startDate
-        }
-        introTechnologies {
-          name
-        }
-        highlightProjects {
-          slug
-          thumbnail {
-            url
-          }
-          title
-          shortDescription
-          technologies {
-            name
-          }
         }
       }
     }
+    workExperiences {
+      companyLogo {
+        url
+      }
+      companyName
+      companyUrl
+      description {
+        raw
+      }
+      endDate
+      startDate
+      technologies {
+        name
+      }
+    }
+  }
   `;
 
+  console.log(query);
+
   return fetchHygraphQuery(
-    query,
-    60 * 60 * 24 // 24 hours
+    query
+    // 60 * 60 * 24 // 24 hours
   );
 };
 
 export default async function Home() {
-  const { page: pageData } = await getPageData();
+  const { page: pageData, workExperiences } = await getPageData();
 
   console.log(pageData);
 
@@ -58,7 +75,7 @@ export default async function Home() {
       <HeroSection homeInfo={pageData} />
       <KnownTechs techs={pageData.knownTechs} />
       <HighlightedProjects projects={pageData.highlightProjects} />
-      <WorkExperience />
+      <WorkExperience experiences={workExperiences} />
     </>
   );
 }
