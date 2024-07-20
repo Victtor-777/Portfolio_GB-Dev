@@ -1,17 +1,22 @@
+import { ProjectSection } from "@/app/types/projects";
 import Image from "next/image";
 
-const sections = [
-  {
-    title: "Login",
-    image: "https://media.graphassets.com/mYImcL1BRr6AhUeU0kEg",
-  },
-  {
-    title: "Home",
-    image: "https://media.graphassets.com/eslYQMyhQ6qI9Y37PTei",
-  },
-];
+// const sections = [
+//   {
+//     title: "Login",
+//     image: "https://media.graphassets.com/mYImcL1BRr6AhUeU0kEg",
+//   },
+//   {
+//     title: "Home",
+//     image: "https://media.graphassets.com/eslYQMyhQ6qI9Y37PTei",
+//   },
+// ];
 
-export const ProjectSections = () => {
+type ProjectSectionsProps = {
+  sections: ProjectSection[];
+};
+
+export const ProjectSections = ({ sections }: ProjectSectionsProps) => {
   return (
     <section className="container my-12 md:my-52 flex flex-col gap-8 md:gap-32">
       {sections.map((section) => (
@@ -23,7 +28,7 @@ export const ProjectSections = () => {
             {section.title}
           </h2>
           <Image
-            src={section.image}
+            src={section.image.url}
             alt={`imagem da sessão ${section.title}`}
             width={1080}
             height={672}
