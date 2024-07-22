@@ -57,7 +57,7 @@ const getPageData = async (): Promise<HomePageData> => {
   }
   `;
 
-  console.log(query);
+  // console.log(query);
 
   return fetchHygraphQuery(query, 60 * 60 * 24);
 };
@@ -65,7 +65,7 @@ const getPageData = async (): Promise<HomePageData> => {
 export default async function Home() {
   const { page: pageData, workExperiences } = await getPageData();
 
-  console.log(pageData);
+  // console.log(pageData);
 
   return (
     <>
